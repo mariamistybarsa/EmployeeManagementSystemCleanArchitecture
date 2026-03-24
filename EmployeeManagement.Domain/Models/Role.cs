@@ -1,0 +1,18 @@
+﻿namespace EmployeeManagement.Domain.Models;
+
+public class Role
+{
+    public Guid Id { get; set; }
+
+    public string Name { get; set; } = null!;
+    public string Description { get; set; } = null!;
+
+    public bool IsActive { get; set; }
+    public bool IsDeleted { get; set; }
+
+    public Guid? CreatedBy { get; set; }
+    public Guid? UpdatedBy { get; set; }
+    public DateTime CreatedDate { get; set; }
+
+    public ICollection<User> Users { get; set; } = new List<User>();
+}

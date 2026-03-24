@@ -1,0 +1,14 @@
+﻿{
+  "profiles": {
+    "EmployeeManagement-WebAPI": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "employee-management/swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5001"
+    }
+  }
+}
