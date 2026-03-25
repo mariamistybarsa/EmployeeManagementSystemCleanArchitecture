@@ -1,5 +1,5 @@
 ﻿using EmployeeManagement.Domain.Models;
-using EmployeeManagement.Persistence.DbContext;
+using EmployeeManagement.Persistence.AppDbContext;
 using EmployeeManagement.Persistence.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,13 +8,13 @@ namespace EmployeeManagement.Persistence.UnitOfWork;
 
 public class UnitOfWork : IUnitOfWork, IDisposable
 {
-    private readonly EmployeeManagementDBContext _context;
+    private readonly EmployeeManagementDbContext _context;
     private readonly IServiceProvider _serviceProvider;
 
     private IDbContextTransaction? _transaction;
     private bool _disposed;
 
-    public UnitOfWork(EmployeeManagementDBContext context, IServiceProvider serviceProvider)
+    public UnitOfWork(EmployeeManagementDbContext context, IServiceProvider serviceProvider)
     {
         _context = context;
         _serviceProvider = serviceProvider;
@@ -73,6 +73,10 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     public IGenericRepository<Department> Departments => GetRepository<IGenericRepository<Department>>();
     public IGenericRepository<Designation> Designations => GetRepository<IGenericRepository<Designation>>();
     public IGenericRepository<Employee> Employees => GetRepository<IGenericRepository<Employee>>();
-    
+    public IGenericRepository<AuditLog> AuditLogs => GetRepository<IGenericRepository<AuditLog>>();
+    public IGenericRepository<Role> Roles => GetRepository<IGenericRepository<Role>>();
+    public IGenericRepository<User> Users => GetRepository<IGenericRepository<User>>();
+    public IGenericRepository<SalaryDisbursement> SalaryDisbursements => GetRepository<IGenericRepository<SalaryDisbursement>>();
+    public IGenericRepository<SalaryAdjustment> SalaryAdjustments => GetRepository<IGenericRepository<SalaryAdjustment>>();
    
 }

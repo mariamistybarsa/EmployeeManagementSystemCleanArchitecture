@@ -29,8 +29,5 @@ public class Employee
     public Guid? CreatedBy { get; set; }
     public Guid? UpdatedBy { get; set; }
     public DateTime CreatedDate { get; set; }
-
-    // Navigation
-    public Department Department { get; set; } = null!;
-    public Designation Designation { get; set; } = null!;
+    
 }

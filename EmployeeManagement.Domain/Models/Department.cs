@@ -14,6 +14,4 @@ public class Department
     public Guid? UpdatedBy { get; set; }
     public DateTime CreatedDate { get; set; }
 
-    // Navigation
-    public ICollection<Employee> Employees { get; set; } = new List<Employee>();
 }

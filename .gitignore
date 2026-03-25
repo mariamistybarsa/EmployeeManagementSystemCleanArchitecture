@@ -1,18 +1,93 @@
-﻿# Build folders
+﻿######################################
+# 🧱 Build folders
+######################################
 bin/
 obj/
 
-# Rider / IntelliJ
-.idea/
+######################################
+# 📦 .NET / ASP.NET Core
+######################################
+*.dll
+*.exe
+*.pdb
+*.cache
+*.deps.json
+*.runtimeconfig.json
 
-# User-specific files
-*.user
+######################################
+# 🔧 Visual Studio / Rider / IntelliJ
+######################################
+.vs/
+.idea/
 *.suo
+*.user
+*.userosscache
+*.sln.docstates
 *.DotSettings.user
 
-# Logs
+######################################
+# 📁 Rider specific
+######################################
+*.sln.iml
+
+######################################
+# 📦 NuGet
+######################################
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+
+######################################
+# 📊 Logs
+######################################
 *.log
 
-# OS files
+######################################
+# ⚙️ OS generated files
+######################################
 .DS_Store
 Thumbs.db
+
+######################################
+# 🔐 Secrets / Environment
+######################################
+appsettings.Development.json
+appsettings.*.json
+.env
+
+######################################
+# 📁 Publish / Output
+######################################
+publish/
+out/
+wwwroot/lib/
+
+######################################
+# 🔄 EF Core Migrations (optional)
+######################################
+# Uncomment if you don't want migrations tracked
+# Migrations/
+
+######################################
+# 🧪 Test results
+######################################
+TestResults/
+coverage/
+
+######################################
+# 🐳 Docker
+######################################
+docker-compose.override.yml
+
+######################################
+# 🔑 Certificates
+######################################
+*.pfx
+*.key
+
+######################################
+# 📂 Temporary files
+######################################
+*.tmp
+*.temp

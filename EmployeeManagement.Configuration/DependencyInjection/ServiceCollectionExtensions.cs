@@ -1,6 +1,12 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Text.Json;
 using EmployeeManagement.Application.DTO.Common;
+using EmployeeManagement.Persistence.AppDbContext;
+using EmployeeManagement.Persistence.Repositories.Implementations;
+using EmployeeManagement.Persistence.Repositories.Interfaces;
+using EmployeeManagement.Persistence.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +19,8 @@ public static class ServiceCollectionExtensions
     public static void RegisterApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
         const string rootNamespace = "EmployeeManagement.";
-
+        services.AddDbContext<EmployeeManagementDbContext>(options =>
+            options.UseSqlServer(configuration.GetConnectionString("EmployeeManagementDb")));
         ConventionRegistrar.RegisterByNamespace(
             services,
             interfaceNamespace: rootNamespace + "Application.Services.Interfaces",
@@ -40,8 +47,8 @@ public static class ServiceCollectionExtensions
 
         ConventionRegistrar.RegisterByNamespace(
             services,
-            interfaceNamespace: rootNamespace + "Persistence.UoW.Interface",
-            implementationNamespace: rootNamespace + "Persistence.UoW.Implementation"
+            interfaceNamespace: rootNamespace + "Persistence.UnitOfWork.Interface",
+            implementationNamespace: rootNamespace + "Persistence.UnitOfWork.Implementation"
         );
 
         ConventionRegistrar.RegisterFluentValidators(services,
@@ -86,7 +93,8 @@ public static class ServiceCollectionExtensions
             });
         });
         services.AddHttpContextAccessor();
-        
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
    
     }
 }

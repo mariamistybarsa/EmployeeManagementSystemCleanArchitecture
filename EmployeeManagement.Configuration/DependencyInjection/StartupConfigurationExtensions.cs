@@ -1,7 +1,8 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using EmployeeManagement.Configuration.Security;
-using EmployeeManagement.Persistence.DbContext;
+using EmployeeManagement.Persistence.AppDbContext;
 using EmployeeManagement.Shared.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
@@ -28,13 +29,13 @@ public static class StartupConfigurationExtensions
     
     private static void ConfigureDatabase(this WebApplicationBuilder builder)
     {
-        var connectionString = builder.Configuration.GetConnectionString("ReservationManagementDb");
+        var connectionString = builder.Configuration.GetConnectionString("EmployeeManagementDb");
         if (string.IsNullOrWhiteSpace(connectionString))
         {
-            throw new InvalidOperationException("Connection string 'ReservationManagementDb' is not configured.");
+            throw new InvalidOperationException("Connection string 'EmployeeManagementDb' is not configured.");
         }
 
-        builder.Services.AddDbContext<EmployeeManagementDBContext>(options =>
+        builder.Services.AddDbContext<EmployeeManagementDbContext>(options =>
             options.UseSqlServer(connectionString));
     }
     

@@ -1230,6 +1230,7 @@
       },
       "EmployeeManagement.Application/1.0.0": {
         "dependencies": {
+          "EmployeeManagement.Domain": "1.0.0",
           "EmployeeManagement.Infrastructure": "1.0.0",
           "EmployeeManagement.Persistence": "1.0.0",
           "EmployeeManagement.Shared": "1.0.0",
