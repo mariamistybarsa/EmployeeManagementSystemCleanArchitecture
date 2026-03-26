@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <Folder Include="Controllers\AuditLogin\" />
-    <Folder Include="Controllers\Auth\" />
     <Folder Include="Controllers\SalaryAdjustment\" />
     <Folder Include="Controllers\SalaryDisbursement\" />
     <Folder Include="Middleware\" />

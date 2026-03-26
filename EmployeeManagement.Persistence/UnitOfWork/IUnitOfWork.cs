@@ -1,5 +1,7 @@
 ﻿using EmployeeManagement.Domain.Models;
 using EmployeeManagement.Persistence.Repositories.Interfaces;
+using EmployeeManagement.Persistence.Repositories.Interfaces.Users;
+
 namespace EmployeeManagement.Persistence.UnitOfWork;
 public interface IUnitOfWork
 {
@@ -10,6 +12,7 @@ public interface IUnitOfWork
     IGenericRepository<Role> Roles { get; }
     IGenericRepository<SalaryAdjustment> SalaryAdjustments { get; }
     IGenericRepository<SalaryDisbursement> SalaryDisbursements { get; }
-    IGenericRepository<User> Users { get; }
+ 
+    IUserRepository Users { get; }
     Task<int> SaveChangesAsync();
 }

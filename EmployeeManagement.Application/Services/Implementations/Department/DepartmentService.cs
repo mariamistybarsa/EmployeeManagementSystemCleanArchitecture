@@ -9,21 +9,13 @@ using FluentValidation;
 
 namespace EmployeeManagement.Application.Services.Implementations.Department;
 
-public class DepartmentService : IDepartmentService
+public class DepartmentService(IUnitOfWork unitOfWork, IValidator<DepartmentRequest> validator)
+    : IDepartmentService
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IValidator<DepartmentRequest> _validator;
-
-    public DepartmentService(IUnitOfWork unitOfWork, IValidator<DepartmentRequest> validator)
-    {
-        _unitOfWork = unitOfWork;
-        _validator = validator;
-    }
-
     public async Task<StandardResponse> AddAsync(DepartmentRequest request)
     {
        
-        var validationResult = await _validator.ValidateAsync(request);
+        var validationResult = await validator.ValidateAsync(request);
 
         if (!validationResult.IsValid)
         {
@@ -36,8 +28,8 @@ public class DepartmentService : IDepartmentService
 
         var entity = DepartmentMapper.MapRequestToEntity(request);
 
-        await _unitOfWork.Departments.AddAsync(entity);
-        await _unitOfWork.SaveChangesAsync();
+        await unitOfWork.Departments.AddAsync(entity);
+        await unitOfWork.SaveChangesAsync();
 
         var data = DepartmentMapper.MapEntityToResponse(entity);
 
@@ -47,7 +39,7 @@ public class DepartmentService : IDepartmentService
     // 🔹 GET ALL
     public async Task<StandardResponse> GetAllAsync(int? pageNumber, int? pageSize)
     {
-        var list = await _unitOfWork.Departments.GetAllAsync();
+        var list = await unitOfWork.Departments.GetAllAsync();
 
         var data = list
             .Where(x => !x.IsDeleted)
@@ -63,7 +55,7 @@ public class DepartmentService : IDepartmentService
     // 🔹 GET BY ID
     public async Task<StandardResponse> GetByIdAsync(Guid id)
     {
-        var entity = await _unitOfWork.Departments.GetByIdAsync(id);
+        var entity = await unitOfWork.Departments.GetByIdAsync(id);
 
         if (entity == null || entity.IsDeleted)
             return ApiResponseHelper.NotFound("Department not found");
@@ -77,7 +69,7 @@ public class DepartmentService : IDepartmentService
     public async Task<StandardResponse> UpdateAsync(Guid id, DepartmentRequest request)
     {
         // ✅ Validation added
-        var validationResult = await _validator.ValidateAsync(request);
+        var validationResult = await validator.ValidateAsync(request);
 
         if (!validationResult.IsValid)
         {
@@ -88,15 +80,15 @@ public class DepartmentService : IDepartmentService
             return ApiResponseHelper.ValidationError("Department", errors);
         }
 
-        var entity = await _unitOfWork.Departments.GetByIdAsync(id);
+        var entity = await unitOfWork.Departments.GetByIdAsync(id);
 
         if (entity == null || entity.IsDeleted)
             return ApiResponseHelper.NotFound("Department not found");
 
         DepartmentMapper.MapRequestToUpdatedEntity(entity, request);
 
-        _unitOfWork.Departments.Update(entity);
-        await _unitOfWork.SaveChangesAsync();
+        unitOfWork.Departments.Update(entity);
+        await unitOfWork.SaveChangesAsync();
 
         return ApiResponseHelper.Success("Department updated successfully");
     }
@@ -104,15 +96,15 @@ public class DepartmentService : IDepartmentService
     // 🔹 DELETE (Soft Delete)
     public async Task<StandardResponse> DeleteAsync(Guid id)
     {
-        var entity = await _unitOfWork.Departments.GetByIdAsync(id);
+        var entity = await unitOfWork.Departments.GetByIdAsync(id);
 
         if (entity == null || entity.IsDeleted)
             return ApiResponseHelper.NotFound("Department not found");
 
         entity.IsDeleted = true;
 
-        _unitOfWork.Departments.Update(entity);
-        await _unitOfWork.SaveChangesAsync();
+        unitOfWork.Departments.Update(entity);
+        await unitOfWork.SaveChangesAsync();
 
         return ApiResponseHelper.Success("Department deleted successfully");
     }

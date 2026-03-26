@@ -1,6 +1,7 @@
 ﻿using EmployeeManagement.Domain.Models;
 using EmployeeManagement.Persistence.AppDbContext;
 using EmployeeManagement.Persistence.Repositories.Interfaces;
+using EmployeeManagement.Persistence.Repositories.Interfaces.Users;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -75,7 +76,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     public IGenericRepository<Employee> Employees => GetRepository<IGenericRepository<Employee>>();
     public IGenericRepository<AuditLog> AuditLogs => GetRepository<IGenericRepository<AuditLog>>();
     public IGenericRepository<Role> Roles => GetRepository<IGenericRepository<Role>>();
-    public IGenericRepository<User> Users => GetRepository<IGenericRepository<User>>();
+    public IUserRepository Users => GetRepository<IUserRepository>();
     public IGenericRepository<SalaryDisbursement> SalaryDisbursements => GetRepository<IGenericRepository<SalaryDisbursement>>();
     public IGenericRepository<SalaryAdjustment> SalaryAdjustments => GetRepository<IGenericRepository<SalaryAdjustment>>();
    

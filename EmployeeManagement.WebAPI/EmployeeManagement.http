@@ -1,0 +1,24 @@
+﻿@local = http://localhost:5001
+
+
+
+### Registration API
+POST {{local}}/api/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "Rahim",
+  "lastName": "Uddin",
+  "gender": "Male",
+  "joinDate": "2024-01-15T09:00:00Z",
+  "dob": "1998-06-20T00:00:00Z",
+  "phoneNumber": "01712345678",
+  "presentAddress": "Chattogram, Bangladesh",
+  "departmentId": "101596ba-56d4-4df0-affe-74321bfa9248",
+  "designationId": "45bc2c92-6e88-45b3-b165-e5a3cd6b15ce",
+  "baseSalary": 35000,
+  "email": "rahim.uddin@example.com",
+  "password": "P@ssw0rd123",
+  "roleId": "39c271ac-e629-4198-b7b2-13bf37ea06cb",
+  "userName": "rahim123"
+}

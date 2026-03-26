@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using EmployeeManagement.Configuration.Security;
 using EmployeeManagement.Persistence.AppDbContext;
+using EmployeeManagement.Shared.Config;
 using EmployeeManagement.Shared.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,8 @@ public static class StartupConfigurationExtensions
         builder.ConfigureMvcAndSwagger(config);
         builder.Services.AddDistributedMemoryCache();
         builder.Services.AddHttpContextAccessor();
-        builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
+        // builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
+        builder.ConfigureJwtSettings();
         builder.Services.RegisterApplicationServices(config);
     }
     
@@ -50,6 +52,9 @@ public static class StartupConfigurationExtensions
         builder.Services.AddJwtAuthentication(config, requireHttpsMetadata: false);
     }
 
-
+    private static void ConfigureJwtSettings(this WebApplicationBuilder builder)
+    {
+        builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
+    }
  
 }
