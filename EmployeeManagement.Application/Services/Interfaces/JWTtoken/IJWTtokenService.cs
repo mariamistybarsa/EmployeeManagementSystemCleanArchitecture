@@ -5,5 +5,5 @@ namespace EmployeeManagement.Application.Services.Interfaces.JWTtoken;
 
 public interface IJWTtokenService 
 {
-    Task<TokenCreationResponse>GenerateToken(User user , Employee employee);
+    Task<TokenCreationResponse>GenerateToken(User user , Employee employee , string roleName);
 }

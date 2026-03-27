@@ -57,7 +57,8 @@ public class AuthService : IAuthService
             }
 
             var employee = await _unitOfWork.Employees.GetByIdAsync(existvalue.EmployeeId);
-            var jwttoken= await _jwttokenService.GenerateToken(existvalue, employee);
+            var role=await  _unitOfWork.Roles.GetByIdAsync(existvalue.RoleId);
+            var jwttoken= await _jwttokenService.GenerateToken(existvalue, employee,role.Name);
             var response = LoginMapper.ToLoginResponse(existvalue,jwttoken.AccessToken);
                return ApiResponseHelper.Success("Login", response);
             

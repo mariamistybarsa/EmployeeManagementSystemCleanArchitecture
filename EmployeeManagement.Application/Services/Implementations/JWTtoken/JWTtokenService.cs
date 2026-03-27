@@ -19,7 +19,7 @@ public class JWTtokenService : IJWTtokenService
     {
         _opt = opt.Value;
     }
-    public Task<TokenCreationResponse> GenerateToken(User user, Employee employee)
+    public Task<TokenCreationResponse> GenerateToken(User user, Employee employee, string roleName)
     {
       
         var key = new SymmetricSecurityKey(
@@ -33,11 +33,11 @@ public class JWTtokenService : IJWTtokenService
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.Name, user.UserName),
-
             new Claim("RoleId", user.RoleId.ToString()),
             new Claim("EmployeeId", employee.Id.ToString()),
 
-            new Claim("FullName", $"{employee.FirstName} {employee.LastName}")
+            new Claim("FullName", $"{employee.FirstName} {employee.LastName}"),
+            new Claim(ClaimTypes.Role, roleName)
         };
 
         var expiryMinutes = double.Parse(_opt.AccessTokenMinutes.ToString());
